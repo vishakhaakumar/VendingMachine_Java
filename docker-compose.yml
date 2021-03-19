@@ -1,0 +1,20 @@
+version: "3"
+services:
+  order-beverage-service:
+    image: vishakhakumar/neworder:v1
+    hostname: order-beverage-service
+    restart: always
+    ports:
+      - 9042:9042
+   
+    
+  nginx-thrift:
+    image: yg397/openresty-thrift:xenial
+    hostname: nginx-thrift
+    ports:
+      - 8080:8080
+    restart: always
+    volumes:
+      - ./nginx_reverse_proxy/lua-scripts:/usr/local/openresty/nginx/lua-scripts
+      - ./nginx_reverse_proxy/conf/nginx.conf:/usr/local/openresty/nginx/conf/nginx.conf
+      - ./gen-lua:/gen-lua
